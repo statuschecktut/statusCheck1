@@ -2,24 +2,45 @@
 <html>
 <head>
     <title>ITS iEnabler</title>
-    <meta http-equiv="X_UA-Compatible" content="IE=9" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta http-equiv="Expires" content="-1">
-    <link rel="stylesheet" type="text/css" href="/itsincludes/css/itscustom.css">
-    <script type="text/javascript" src="/itsincludes/js/its_scripts.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/itsincludes/js/overlib.js" type="text/javascript"></script>
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
     <style>
-        @media screen {
-            span.skype_pnh_print_container { display: inline !important; }
-            span.skype_pnh_container { display: none !important; }
-        }
-        span.skype_pnh_mark { display: inline !important; }
+        /* General Body and Layout */
         body {
+            background-color: #FFFFFF;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            margin-left: 10px;
             background-image: url('/itsimages/TUT10year.jpg');
             background-repeat: no-repeat;
             background-position: left top;
             background-size: 100% 180px;
         }
+
+        /* Frame Body */
+        body.framebody, body.accdet {
+            background-color: #FFFFFF;
+            margin-top: 0;
+            margin-left: 10px;
+        }
+
+        /* Table and Form Styling */
+        h1, h2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        h3, h4 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        h5, h6 {
+            font-weight: bold;
+        }
+
         #alignInMiddle {
             margin-left: auto;
             margin-right: auto;
@@ -29,40 +50,83 @@
             position: relative;
             border: 1px solid black;
         }
+
+        table {
+            width: 100%;
+        }
+
+        td, th {
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .mandatory_fld {
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        /* Links */
+        a, a:active, a:link, a:visited {
+            color: #5A7EDC;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Additional Elements */
+        div.framediv {
+            text-align: left;
+        }
+
+        p.fineprint {
+            font-size: 8px;
+            text-align: left;
+        }
+
+        hr.mudsep {
+            color: black;
+            width: 80%;
+            height: 5px;
+        }
     </style>
     <script>
         function validateForm(event) {
-            event.preventDefault(); // Prevent form from submitting
+            event.preventDefault();
             const idNumber = document.frmOne.x_idno.value.trim();
             const surname = document.frmOne.x_surn.value.trim();
             const fullName = document.frmOne.x_names.value.trim();
 
-            // Check if either the correct ID number or full name is entered
             if (idNumber === "0501090341089" || (surname === "MAIMELA" && fullName === "NNUKIE DIMPHO")) {
-                window.location.href = 'statuscheck.html'; // Redirect to status page
+                window.location.href = 'statuscheck.html';
             } else {
                 alert("Please enter the correct ID Number or Full Name.");
             }
         }
+
+        function noBack() { 
+            window.history.forward(); 
+        }
+
+        window.onload = noBack;
+        window.onpageshow = function (evt) { 
+            if (evt.persisted) noBack(); 
+        };
+        window.onunload = function () { 
+            void (0); 
+        };
     </script>
 </head>
 <body class="framebody" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
-    <div id="overDiv" style="position: absolute; visibility: hidden; z-index: 1000;"></div>
-    <script>
-        function noBack() { window.history.forward(); }
-        noBack();
-        window.onload = noBack;
-        window.onpageshow = function (evt) { if (evt.persisted) noBack(); }
-        window.onunload = function () { void (0); }
-    </script>
-
     <form method="post" name="frmOne" onsubmit="validateForm(event);">
         <div id="alignInMiddle">
             <h3>Enter ID Number to be able to see Application Status and Student Number</h3>
             <table>
                 <tr>
                     <td>ID Number</td>
-                    <td width="10px"><font class="mandatory_fld" id="z_idno">*</font></td>
+                    <td width="10px"><span class="mandatory_fld" id="z_idno">*</span></td>
                     <td width="90%"><input type="text" name="x_idno" size="15" maxlength="15" value=""></td>
                 </tr>
                 <tr>
@@ -70,17 +134,17 @@
                 </tr>
                 <tr>
                     <td>Surname</td>
-                    <td><font class="mandatory_fld" id="z_surn">*</font></td>
+                    <td><span class="mandatory_fld" id="z_surn"></span></td>
                     <td><input type="text" name="x_surn" size="30" maxlength="30" value=""></td>
                 </tr>
                 <tr>
                     <td>Full Name</td>
-                    <td><font class="mandatory_fld" id="z_names">*</font></td>
+                    <td><span class="mandatory_fld" id="z_names"></span></td>
                     <td><input type="text" name="x_names" size="30" maxlength="40" value=""></td>
                 </tr>
                 <tr>
                     <td>Date of Birth</td>
-                    <td><font class="mandatory_fld" id="z_birdat">*</font></td>
+                    <td><span class="mandatory_fld" id="z_birdat"></span></td>
                     <td>
                         <input type="text" name="x_birdat" size="12" maxlength="11" value="">
                         <a onclick="return Call_calendar(document.frmOne.x_birdat);" href="#"><img src="/itsimages/calendar.gif"></a>
